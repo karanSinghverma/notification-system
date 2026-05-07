@@ -1,6 +1,7 @@
 package com.notification_system.kafka;
 
 import com.notification_system.model.UserEvent;
+import com.notification_system.service.NotificationService;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
  * This class consumes messages from "user-events" topic
  * and processes them for notification generation.
  */
-
 @Service
 public class EventConsumer {
     /**
@@ -20,10 +20,16 @@ public class EventConsumer {
      * This will not run in office environment (Kafka not available),
      * but code is ready for production/home testing.
      */
+    private final NotificationService notificationService;
+
+    private EventConsumer(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
 
     @KafkaListener(topics = "user-events", groupId = "notification-group")
     public void consume(UserEvent event){
 
+        notificationService.processEvent(event);
         // Log received event
         System.out.println("Received event from Kafka: " + event);
 
