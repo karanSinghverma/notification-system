@@ -15,3 +15,8 @@ services:
       KAFKA_ADVERTISED_PORT: 9092
     depends_on:
       - zookeeper
+
+  redis:
+      image: redis:7
+      ports:
+        - "6379:6379"

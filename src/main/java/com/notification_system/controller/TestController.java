@@ -32,6 +32,6 @@ public class TestController {
     @PostMapping("/send")
     public String sendEvent(@RequestBody UserEvent event){
         producer.sendEvent(event);
-        return "Event sent to Kafka ";
+        return "Event sent to Kafka \n Notification save in DB";
     }
 }
